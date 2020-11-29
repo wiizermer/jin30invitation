@@ -85,9 +85,10 @@ class App  extends Component  {
   
 
   render () {
+
     const { dDay, variationcode, verified, identity, notAuthed, remark, confirmed, loading, badRequest } = this.state;
     return <main>
-        <div class="p-4 m-auto" style={{ width: "100vw", background: "rgb(8, 209, 209)" }}>
+        <div class="p-4 m-auto m-100" style={{ background: "rgb(8, 209, 209)" }}>
           <p
             style={{
               margin: 0,
