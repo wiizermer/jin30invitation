@@ -17,7 +17,7 @@ const identityList = [
   { name: "Sara", nName: "張郡芳", code: "負債上億勝利組" },
   { name: "William", nName: "威廉", code: "???" },
   { name: "Sunny", nName: "高煦媛", code: "SUNNYKAO" },
-  { name: "Jimmy", nName: "bb", code: "jimmy" }
+  { name: "盧靖", nName: "豬豬", code: "shrekissocute" }
 ];
 
 class App  extends Component  {
@@ -88,7 +88,7 @@ class App  extends Component  {
 
     const { dDay, variationcode, verified, identity, notAuthed, remark, confirmed, loading, badRequest } = this.state;
     return <main>
-        <div class="p-4 m-auto m-100" style={{ background: "rgb(8, 209, 209)" }}>
+        <div class="p-4 w-100" style={{ background: "rgb(8, 209, 209)" }}>
           <p
             style={{
               margin: 0,
