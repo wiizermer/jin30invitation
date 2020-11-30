@@ -155,6 +155,9 @@ class App  extends Component  {
                   地點：<b>SOGO 錢櫃</b>
                 </p>
                 <iframe title="location" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d766.9697067420609!2d121.54421535771908!3d25.04152578292411!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abd09ec3c6e3%3A0x13e5d3e71eef419d!2z6Yyi5quD5Y-w5YyXU09HT-W6lw!5e0!3m2!1szh-TW!2stw!4v1606666162468!5m2!1szh-TW!2stw" frameborder="0" style={{ width: "100%", height: "50vh", border: 0 }} allowfullscreen="" aria-hidden="false" tabindex="0" />
+                <p style={{ fontSize: 28, color:  "#f5d86e"  }}>
+                  注意事項：<b>參加者請自備一支 紅 或 白 或 氣泡 酒入場</b>
+                </p>
               </text>
               {!confirmed ? <div>
                   {vip && <div style={{ textAlign: "left", color: "#fff" }}>
