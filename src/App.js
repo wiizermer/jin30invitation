@@ -136,7 +136,7 @@ class App  extends Component  {
                 <h4>
                   親愛的 {
                     vip
-                    ? "VIP"
+                    ? "靖之友"
                     : `${identity.name}, ${identity.nName}`}{" "}
                   您好：
                 </h4>
