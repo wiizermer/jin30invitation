@@ -12,7 +12,7 @@ const identityList = [
   { name: "Shawn", nName: "大哥 a.k.a 內湖金城武", code: "大哥喝了吧" },
   { name: "Karen", nName: "高高", code: "能不能別再減肥了" },
   { name: "Eddie", nName: "艾迪", code: "年終分我一點拜託" },
-  { name: "陳奕廷", code: "湯圓他爸" },
+  { name: "陳奕廷", nName: "湯圓他爸", code: "湯圓他爸" },
   { name: "Debby", nName: "小芸", code: "湯圓他媽" },
   { name: "Sara", nName: "張郡芳", code: "負債上億勝利組" },
   { name: "William", nName: "威廉", code: "???" },
