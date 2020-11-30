@@ -37,7 +37,6 @@ class App  extends Component  {
       confirmed: confirmed === 'true',
       vip: false
     }
-    
   }
 
   varifyIdentity = async (variationcode) => {
@@ -50,15 +49,15 @@ class App  extends Component  {
         confirmed: false
       })
     } else if (isMember) {
-             this.setState({
-               verified: true,
-               notAuthed: false,
-               identity: identityList.find(d => d.code === variationcode)
+      this.setState({
+        verified: true,
+        notAuthed: false,
+        identity: identityList.find(d => d.code === variationcode)
       })
       await window.localStorage.setItem("id", variationcode);
-           } else if (!isMember && variationcode !== "JIN30") {
-             this.setState({ notAuthed: true });
-           }
+    } else if (!isMember && variationcode !== "JIN30") {
+      this.setState({ notAuthed: true });
+    }
   }
 
   sendOut = (isjoin) => {
@@ -184,9 +183,7 @@ class App  extends Component  {
                       確認參加
                     </button>
                   </div>
-                  {badRequest && <p style={{ color: "red" }}>
-                      發生技術性錯誤！請聯絡吉米！
-                    </p>}
+                  {badRequest && <p style={{ color: "red" }}>發生技術性錯誤！請聯絡吉米！</p>}
                 </div> : <div style={{ marginTop: 20 }}>
                   <p style={{ color: "#fff", fontSize: 28 }}>感謝您的回覆！!</p>
                   <lottie-player loop autoplay src="https://assets9.lottiefiles.com/private_files/lf30_kcOBaC.json" background="transparent" speed="1.2" style={{ width: "300px", height: "300px", margin: "auto" }} />
