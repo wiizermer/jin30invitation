@@ -5,7 +5,7 @@ import moment from 'moment'
 const identityList = [
   { name: "Angus", nName: "格斯 a.k.a Father of Avery", code: "YOLOFUCKYOU" },
   { name: "Abby", nName: "芊芊 a.k.a Mother of Avery", code: "AVERYSOCUTE" },
-  { name: "Andera", nName: "林老濕", code: "ITSALLABOUTSEX" },
+  { name: "Andrea", nName: "林老濕", code: "ITSALLABOUTSEX" },
   { name: "Davis", nName: "林正偉", code: "MAJOHNLOSER" },
   { name: "Betty", nName: "貝蒂", code: "GIVEMEYOURFOLLOWERS" },
   { name: "Evan", nName: "郭董", code: "KEBUKE" },
