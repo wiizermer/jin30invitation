@@ -17,7 +17,8 @@ const identityList = [
   { name: "Sara", nName: "張郡芳", code: "負債上億勝利組" },
   { name: "William", nName: "威廉", code: "???" },
   { name: "Sunny", nName: "高煦媛", code: "SUNNYKAO" },
-  { name: "盧靖", nName: "豬豬", code: "shrekissocute" }
+  { name: "盧靖", nName: "豬豬", code: "shrekissocute" },
+  { code: "JIN30" }
 ];
 
 class App  extends Component  {
@@ -25,7 +26,7 @@ class App  extends Component  {
     super(props)
     const dMinus = moment("2020-12-05").diff(moment(), "days");
     const id = localStorage.getItem("id")
-    const identity = identityList.find(d => d.name === id)
+    const identity = identityList.find(d => d.code === id)
     const confirmed = localStorage.getItem("confirmed");
 
     this.state = {
@@ -33,34 +34,40 @@ class App  extends Component  {
       openVerifyInput: false,
       verified: !!id,
       identity,
-      confirmed: confirmed === 'true'
+      confirmed: confirmed === 'true',
+      vip: false
     }
     
   }
 
   varifyIdentity = async (variationcode) => {
     const isMember = identityList.some(d => d.code === variationcode)
-    if (isMember) {
+    if (variationcode === "JIN30") {
       this.setState({
         verified: true,
         notAuthed: false,
-        identity: identityList.find(d => d.code === variationcode)
+        vip: true,
+        confirmed: false
       })
-      await window.localStorage.setItem("id", identityList.find(d => d.code === variationcode).name);
-    } else {
-      this.setState({
-        notAuthed: true
+    } else if (isMember) {
+             this.setState({
+               verified: true,
+               notAuthed: false,
+               identity: identityList.find(d => d.code === variationcode)
       })
-    }
+      await window.localStorage.setItem("id", variationcode);
+           } else if (!isMember && variationcode !== "JIN30") {
+             this.setState({ notAuthed: true });
+           }
   }
 
   sendOut = (isjoin) => {
     this.setState({ loading: true })
-    const { identity, remark } = this.state
-    console.log({ Name: identity.name, isJoined: isjoin, remark: remark })
+    const { identity, remark, vip, vipName } = this.state
+    console.log({ Name: vip ? vipName : identity.name, isJoined: isjoin, remark: remark })
     fetch("https://api.apispreadsheets.com/data/4221/", {
       method: "POST",
-      body: JSON.stringify({ data: { Name: identity.name, isJoined: isjoin, remark: remark } })
+      body: JSON.stringify({ data: { Name: vip ? vipName : identity.name, isJoined: isjoin, remark: remark } })
     }).then(res => {
       if (res.status === 201) {
         this.setState({ confirmed: true, loading: false  })
@@ -86,20 +93,20 @@ class App  extends Component  {
 
   render () {
 
-    const { dDay, variationcode, verified, identity, notAuthed, remark, confirmed, loading, badRequest } = this.state;
+    const { dDay, vip, variationcode, verified, identity, notAuthed, remark, confirmed, loading, badRequest, vipName } = this.state;
     return <main>
         <div class="p-4 w-100" style={{ background: "rgb(8, 209, 209)" }}>
+          <p style={{ margin: 0, fontSize: "4rem", fontWeight: 900, color: "#fff" }}>
+            三十而靖
+          </p>
           <p
             style={{
               margin: 0,
-              fontSize: "4rem",
-              fontWeight: 900,
-              color: "#fff"
+              fontSize: "5rem",
+              color: "#fff",
+              fontWeight: 900
             }}
           >
-            三十而靖
-          </p>
-          <p style={{ margin: 0, fontSize: "5rem", color: "#fff", fontWeight: 900 }}>
             D - {dDay}
           </p>
           <div>
@@ -127,7 +134,11 @@ class App  extends Component  {
         {verified && !notAuthed && <section class="w-100 p-4" style={{ background: "rgb(8, 209, 209)" }}>
               <text class="m-auto" style={{ textAlign: "left", color: "#fff" }}>
                 <h4>
-                  親愛的 {identity.name}, {identity.nName} 您好：
+                  親愛的 {
+                    vip
+                    ? "VIP"
+                    : `${identity.name}, ${identity.nName}`}{" "}
+                  您好：
                 </h4>
                 <h1 style={{ color: "#f5d86e", fontSize: 32 }}>恭喜您！</h1>
                 <p>
@@ -146,6 +157,14 @@ class App  extends Component  {
                 <iframe title="location" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d766.9697067420609!2d121.54421535771908!3d25.04152578292411!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abd09ec3c6e3%3A0x13e5d3e71eef419d!2z6Yyi5quD5Y-w5YyXU09HT-W6lw!5e0!3m2!1szh-TW!2stw!4v1606666162468!5m2!1szh-TW!2stw" frameborder="0" style={{ width: "100%", height: "50vh", border: 0 }} allowfullscreen="" aria-hidden="false" tabindex="0" />
               </text>
               {!confirmed ? <div>
+                  {vip && <div style={{ textAlign: "left", color: "#fff" }}>
+                      <label for="blessing">您的大名：</label>
+                      <input class="form-control" id="vipName" rows="5" value={vipName} onChange={e => this.setState(
+                            {
+                              vipName: e.target.value
+                            }
+                          )} />
+                    </div>}
                   <div style={{ textAlign: "left", color: "#fff" }}>
                     <label for="blessing">真誠的祝福或備註</label>
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" value={remark} onChange={e => this.setState(
@@ -162,7 +181,9 @@ class App  extends Component  {
                       確認參加
                     </button>
                   </div>
-                  {badRequest && <p style={{ color: 'red' }}>發生技術性錯誤！請聯絡吉米！</p>}
+                  {badRequest && <p style={{ color: "red" }}>
+                      發生技術性錯誤！請聯絡吉米！
+                    </p>}
                 </div> : <div style={{ marginTop: 20 }}>
                   <p style={{ color: "#fff", fontSize: 28 }}>感謝您的回覆！!</p>
                   <lottie-player loop autoplay src="https://assets9.lottiefiles.com/private_files/lf30_kcOBaC.json" background="transparent" speed="1.2" style={{ width: "300px", height: "300px", margin: "auto" }} />
